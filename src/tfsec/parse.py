@@ -120,6 +120,28 @@ def extract_changes(resource_change):
                 
     return changes if changes else None
 
+def create_resource_changes_dict(json_plan: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Create a dictionary of resource changes from terraform plan JSON.
+    
+    Args:
+        json_plan: Dictionary containing terraform plan JSON
+        
+    Returns:
+        Dictionary containing resource changes
+    """
+    changes = {}
+    for resource in json_plan.get("resource_changes", []):
+        resource_changes = extract_changes(resource.get("change", {}))
+        if resource_changes:
+            changes[resource["address"]] = {
+                "type": resource.get("type", ""),
+                "name": resource.get("name", ""),
+                "action": resource["change"].get("actions", []),
+                "changes": resource_changes
+            }
+    return changes
+
 def main():
     import sys
     import json
@@ -147,17 +169,7 @@ def main():
         sys.exit(1)
 
     if result.json_plan:
-        changes = {}
-        for resource in result.json_plan.get("resource_changes", []):
-            resource_changes = extract_changes(resource.get("change", {}))
-            if resource_changes:
-                changes[resource["address"]] = {
-                    "type": resource.get("type", ""),
-                    "name": resource.get("name", ""),
-                    "action": resource["change"].get("actions", []),
-                    "changes": resource_changes
-                }
-
+        changes = create_resource_changes_dict(result.json_plan)
         if changes:
             print(json.dumps({"changes": changes}, indent=2))
         else:

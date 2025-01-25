@@ -4,7 +4,7 @@ import unittest
 from pathlib import Path
 from unittest.mock import MagicMock, patch, mock_open
 
-from tfsec.parse import run_terraform_plan, extract_changes
+from tfsec.parse import run_terraform_plan, extract_changes, create_resource_changes_dict
 
 
 class TestTerraformParse(unittest.TestCase):
@@ -166,6 +166,30 @@ class TestTerraformParse(unittest.TestCase):
         self.assertEqual(result.return_code, 2)
         self.assertEqual(result.stdout, "Changes pending")
         self.assertEqual(result.json_plan, self.sample_json)
+
+    def test_create_resource_changes_dict(self):
+        sample_plan = {
+            "resource_changes": [{
+                "address": "test_resource",
+                "type": "test_type",
+                "name": "test",
+                "change": self.sample_resource_change
+            }]
+        }
+        
+        changes = create_resource_changes_dict(sample_plan)
+        
+        self.assertIn("test_resource", changes)
+        self.assertEqual(changes["test_resource"]["type"], "test_type")
+        self.assertEqual(changes["test_resource"]["name"], "test")
+        self.assertEqual(
+            changes["test_resource"]["changes"]["source_ranges"]["before"],
+            ["10.0.0.0/8"]
+        )
+        self.assertEqual(
+            changes["test_resource"]["changes"]["source_ranges"]["after"],
+            ["0.0.0.0/0"]
+        )
 
 
 if __name__ == "__main__":
