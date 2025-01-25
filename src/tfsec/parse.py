@@ -1,3 +1,69 @@
+"""Terraform Plan Parser Module
+
+This module provides functionality to analyze Terraform plan changes by comparing
+against an existing state file. It requires an existing Terraform state file to
+generate meaningful diffs, as Terraform uses this state to determine what changes
+are needed.
+
+Requirements:
+    - Python 3.7+
+    - Terraform CLI installed and in PATH
+    - An existing Terraform state file for comparison
+
+Usage:
+    python parse.py <terraform_directory> --state <path_to_state_file>
+
+Example:
+    python parse.py ./my-terraform-config --state ./terraform.tfstate
+
+The module works by:
+1. Copying the provided state file to the target directory
+2. Running terraform init to initialize the configuration
+3. Executing terraform plan to generate a plan
+4. Converting the plan to JSON format
+5. Analyzing changes between the existing state and planned state
+6. Reporting differences in resources
+
+Output Format:
+    {
+      "changes": {
+        "google_compute_firewall.allow-http-https": {
+          "type": "google_compute_firewall",
+          "name": "allow-http-https",
+          "action": ["update"],
+          "changes": {
+            "source_ranges": {
+              "before": ["10.0.0.0/8"],
+              "after": ["0.0.0.0/0"]
+            }
+          }
+        }
+      }
+    }
+
+Important Notes:
+    1. State File Requirement: An existing state file is crucial for generating
+       meaningful diffs. Without it, Terraform treats everything as new resources.
+    2. State File Handling: The module temporarily copies the state file to the
+       target directory and removes it after planning.
+    3. Security: Ensure the state file contains no sensitive information, as it
+       may be logged in the diff output.
+
+Example Use Cases:
+    1. Security Auditing:
+       python parse.py ./firewall-rules --state prod.tfstate
+    2. Change Validation:
+       python parse.py ./network-config --state current.tfstate
+
+Error Handling:
+    The module handles several error conditions:
+    - Missing state file
+    - Invalid Terraform configuration
+    - JSON parsing errors
+    - Terraform execution failures
+    Error messages are written to stderr with appropriate exit codes.
+"""
+
 from dataclasses import dataclass
 from pathlib import Path
 import subprocess
