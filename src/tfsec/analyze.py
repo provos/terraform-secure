@@ -10,9 +10,9 @@ from pathlib import Path
 from typing import Dict, List, Optional
 from pydantic import BaseModel, Field
 
-from .llm_interface import LLMInterface
-from .llm_config import llm_from_config
-from .parse import run_terraform_plan, create_resource_changes_dict
+from tfsec.llm_interface import LLMInterface
+from tfsec.llm_config import llm_from_config
+from tfsec.parse import run_terraform_plan, create_resource_changes_dict
 
 
 class SecurityIssue(BaseModel):
