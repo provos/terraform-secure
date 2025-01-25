@@ -5,3 +5,4 @@ __pycache__
 terraform.tfstate
 .terraform.tfstate.*
 terraform.tfstate.*
+tfplan
