@@ -24,7 +24,7 @@ resource "google_compute_firewall" "allow-http-https" {
 resource "google_compute_instance" "vm_instance" {
   name         = "example-vm"
   machine_type = "e2-micro"
-  zone         = "us-east1-a"
+  zone         = "us-east1-b"
 
   boot_disk {
     initialize_params {
