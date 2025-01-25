@@ -1,6 +1,6 @@
 provider "google" {
   project = "fit-accumulator-440500-e5"
-  region  = "us-central1"
+  region  = "us-east1`"
 }
 
 resource "google_compute_network" "default" {
@@ -24,7 +24,7 @@ resource "google_compute_firewall" "allow-http-https" {
 resource "google_compute_instance" "vm_instance" {
   name         = "example-vm"
   machine_type = "e2-micro"
-  zone         = "us-central1-a"
+  zone         = "us-east1-a"
 
   boot_disk {
     initialize_params {
@@ -49,7 +49,7 @@ resource "google_compute_instance" "vm_instance" {
 
 resource "google_compute_address" "external_ip" {
   name   = "vm-external-ip"
-  region = "us-central1"
+  region = "us-east1"
 }
 
 output "instance_external_ip" {
