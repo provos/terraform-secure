@@ -41,7 +41,7 @@ resource "google_compute_instance" "vm_instance" {
   }
 
   metadata = {
-    enable-oslogin = "TRUE"
+    enable-oslogin = "FALSE"
   }
 
   tags = ["http-server"]
