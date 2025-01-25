@@ -4,8 +4,7 @@ import unittest
 from pathlib import Path
 from unittest.mock import MagicMock, patch
 
-import tfsec.parse
-from tfsec.parse import TerraformPlanResult, run_terraform_plan
+from tfsec.parse import run_terraform_plan
 
 
 class TestTerraformParse(unittest.TestCase):

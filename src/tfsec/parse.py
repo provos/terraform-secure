@@ -78,3 +78,35 @@ def run_terraform_plan(directory: Path) -> TerraformPlanResult:
             return_code=e.returncode,
             error=str(e)
         )
+
+
+def main():
+    import sys
+    import json
+
+    if len(sys.argv) != 2:
+        print("Usage: python parse.py <terraform_directory>")
+        sys.exit(1)
+
+    directory = Path(sys.argv[1])
+    if not directory.is_dir():
+        print(f"Error: {directory} is not a valid directory")
+        sys.exit(1)
+
+    result = run_terraform_plan(directory)
+    
+    if result.error:
+        print(f"Error: {result.error}", file=sys.stderr)
+        print(f"Stderr: {result.stderr}", file=sys.stderr)
+        sys.exit(1)
+
+    if result.json_plan:
+        print(json.dumps(result.json_plan, indent=2))
+    else:
+        print("No JSON plan was generated", file=sys.stderr)
+        print(f"Stdout: {result.stdout}", file=sys.stderr)
+        print(f"Stderr: {result.stderr}", file=sys.stderr)
+        sys.exit(1)
+
+if __name__ == "__main__":
+    main()
