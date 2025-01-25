@@ -6,6 +6,7 @@ It identifies potentially risky changes and provides security recommendations.
 
 import argparse
 import json
+from textwrap import dedent
 from pathlib import Path
 from typing import Dict, List, Optional
 from pydantic import BaseModel, Field
@@ -36,26 +37,52 @@ class SecurityAnalysis(BaseModel):
     )
 
 
-SECURITY_ANALYSIS_PROMPT = """You are a security expert analyzing Terraform infrastructure changes.
-Please analyze the following Terraform resource changes for security implications:
+SECURITY_ANALYSIS_PROMPT = dedent("""You are a cloud security expert specializing in Terraform infrastructure-as-code security analysis. Your task is to thoroughly analyze the security implications of proposed Terraform infrastructure changes.
+
+Please examine the following Terraform plan output, represented in JSON format, which describes the intended modifications to the existing infrastructure:
 
 {changes}
 
-Focus on:
-1. Network security (firewall rules, open ports, CIDR ranges)
-2. Access controls and permissions
-3. Resource exposure to the internet
-4. Security best practices
-5. Compliance concerns
+**Your analysis should be comprehensive and cover, but not be limited to, the following areas:**
 
-For each security-relevant change:
-1. Assess the severity
-2. Explain the security implications
-3. Provide specific recommendations
+1.  **Network Security:**
+    *   **Firewall Rules:** Analyze changes to `google_compute_firewall`, `aws_security_group`, `azurerm_network_security_group`, or equivalent resources. Identify any new, modified, or removed rules, focusing on:
+        *   **Ingress and Egress Rules:** Scrutinize changes to allowed ports, protocols (TCP, UDP, ICMP), source/destination IP ranges (CIDR blocks), security groups, and source/destination tags.
+        *   **Overly Permissive Rules:** Flag rules that allow access from overly broad sources (e.g., `0.0.0.0/0`) or to sensitive ports (e.g., SSH, RDP, database ports).
+    *   **Network Exposure:** Assess changes to `google_compute_instance`, `aws_instance`, `azurerm_virtual_machine`, or equivalent resources that might expose instances directly to the public internet (e.g., changes to public IP assignment, network interfaces).
+    *   **Load Balancers and Application Gateways:** Analyze changes to load balancer configurations that might impact traffic routing, SSL/TLS termination, and security policies.
+    *   **VPNs and Direct Connections:** Identify changes related to VPN gateways, virtual private gateways, or direct connect configurations that might affect secure connectivity.
+    *   **DNS and Routing:** Identify changes to DNS settings or routing tables that might expose internal resources or direct traffic to untrusted destinations.
+
+2.  **Identity and Access Management (IAM):**
+    *   **User and Role Management:** Analyze changes to IAM users, roles, groups, and policies (e.g., `google_service_account`, `aws_iam_role`, `azurerm_role_definition`, or changes to `metadata.enable-oslogin`). Identify new or modified permissions, particularly those that grant excessive privileges (e.g., administrator access).
+    *   **Service Accounts/Roles:** Examine changes to service accounts or roles used by applications and services. Assess whether their permissions adhere to the principle of least privilege.
+    *   **Authentication Mechanisms:** Identify changes that impact authentication methods, such as modifications to SSH key configurations, or enabling/disabling password-based authentication.
+
+3.  **Data Security:**
+    *   **Storage Encryption:** Analyze changes to storage services (e.g., `google_storage_bucket`, `aws_s3_bucket`, `azurerm_storage_account`) that might affect encryption at rest settings.
+    *   **Database Security:** Scrutinize changes to database instances (e.g., `google_sql_database_instance`, `aws_db_instance`, `azurerm_sql_database`) related to security groups, authentication, and encryption.
+    *   **Key Management:** Examine changes to key management services (e.g., `google_kms_crypto_key`, `aws_kms_key`, `azurerm_key_vault_key`) that might impact encryption key usage and security.
+    *   **Secrets Management:** Identify changes to secrets stored in services like `google_secret_manager_secret`, `aws_secretsmanager_secret`, `azurerm_key_vault_secret`. Assess whether these changes are done securely.
+
+4.  **Resource Exposure and Hardening:**
+    *   **Public Access:** Identify any changes that might make resources publicly accessible that should not be (e.g., changes to storage bucket ACLs, database instance visibility).
+    *   **OS Hardening:** Review changes related to OS-level security configurations, such as disabling unnecessary services, enabling security auditing, and applying security patches.
+
+5.  **Compliance and Best Practices:**
+    *   **Compliance Standards:** Assess whether the changes comply with relevant industry standards and regulations (e.g., PCI DSS, HIPAA, SOC 2, GDPR, CIS Benchmarks).
+    *   **Principle of Least Privilege:** Evaluate whether all access granted is strictly necessary and follows the principle of least privilege.
+    *   **Security Groups vs. Network ACLs:** Analyze whether the use of security groups and network ACLs is appropriate and layered effectively.
+
+**For each identified security-relevant change or concern:**
+
+1.  **Severity Assessment:** Classify the severity of the risk as **Critical, High, Medium, or Low**.
+2.  **Detailed Explanation:** Provide a clear and concise explanation of the security implications. Describe the potential impact and attack vectors.
+3.  **Specific Recommendations:** Offer actionable recommendations to mitigate the identified risks. These should include specific configuration changes or alternative approaches.
 
 Format your response according to the provided schema, including a markdown summary.
 Consider both direct and indirect security impacts of the changes.
-"""
+""").strip()
 
 
 def analyze_changes(llm: LLMInterface, changes: Dict) -> Optional[SecurityAnalysis]:
