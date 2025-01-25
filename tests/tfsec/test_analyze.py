@@ -83,7 +83,7 @@ class TestAnalyze(unittest.TestCase):
         )
 
         # Test main function with arguments
-        with patch('sys.argv', ['analyze.py', '/fake/dir', '--provider', 'openai', '--model', 'gpt-4']):
+        with patch('sys.argv', ['analyze.py', '--directory', '/fake/dir', '--provider', 'openai', '--model', 'gpt-4']):
             from tfsec.analyze import main
             return_code = main()
 
@@ -107,7 +107,7 @@ class TestAnalyze(unittest.TestCase):
         )
 
         # Test main function
-        with patch('sys.argv', ['analyze.py', '/fake/dir']):
+        with patch('sys.argv', ['analyze.py', '--directory', '/fake/dir']):
             from tfsec.analyze import main
             return_code = main()
 
@@ -125,7 +125,7 @@ class TestAnalyze(unittest.TestCase):
         )
 
         # Test main function
-        with patch('sys.argv', ['analyze.py', '/fake/dir']):
+        with patch('sys.argv', ['analyze.py', '--directory', '/fake/dir']):
             from tfsec.analyze import main
             return_code = main()
 

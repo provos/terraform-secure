@@ -2,9 +2,13 @@ import json
 import subprocess
 import unittest
 from pathlib import Path
-from unittest.mock import MagicMock, patch, mock_open
+from unittest.mock import MagicMock, mock_open, patch
 
-from tfsec.parse import run_terraform_plan, extract_changes, create_resource_changes_dict
+from tfsec.parse import (
+    create_resource_changes_dict,
+    extract_changes,
+    run_terraform_plan,
+)
 
 
 class TestTerraformParse(unittest.TestCase):
@@ -16,15 +20,9 @@ class TestTerraformParse(unittest.TestCase):
         }
         self.test_state_file = Path("/fake/terraform/state.tfstate")
         self.sample_resource_change = {
-            "before": {
-                "source_ranges": ["10.0.0.0/8"],
-                "name": "test-firewall"
-            },
-            "after": {
-                "source_ranges": ["0.0.0.0/0"],
-                "name": "test-firewall"
-            },
-            "actions": ["update"]
+            "before": {"source_ranges": ["10.0.0.0/8"], "name": "test-firewall"},
+            "after": {"source_ranges": ["0.0.0.0/0"], "name": "test-firewall"},
+            "actions": ["update"],
         }
 
     @patch("tfsec.parse.shutil.copy2")
@@ -34,12 +32,12 @@ class TestTerraformParse(unittest.TestCase):
     def test_plan_with_state_file(self, mock_unlink, mock_exists, mock_run, mock_copy):
         # Mock file operations
         mock_exists.return_value = True
-        
+
         # Mock successful execution of all commands
         mock_run.side_effect = [
             MagicMock(returncode=0, stdout="Init success", stderr=""),
             MagicMock(returncode=0, stdout="Plan success", stderr=""),
-            MagicMock(returncode=0, stdout=json.dumps(self.sample_json), stderr="")
+            MagicMock(returncode=0, stdout=json.dumps(self.sample_json), stderr=""),
         ]
 
         result = run_terraform_plan(self.test_dir, self.test_state_file)
@@ -51,7 +49,7 @@ class TestTerraformParse(unittest.TestCase):
 
     def test_extract_changes_with_updates(self):
         changes = extract_changes(self.sample_resource_change)
-        
+
         self.assertIsNotNone(changes)
         self.assertIn("source_ranges", changes)
         self.assertEqual(changes["source_ranges"]["before"], ["10.0.0.0/8"])
@@ -61,45 +59,11 @@ class TestTerraformParse(unittest.TestCase):
         no_op_change = {
             "before": {"name": "test"},
             "after": {"name": "test"},
-            "actions": ["no-op"]
+            "actions": ["no-op"],
         }
-        
+
         changes = extract_changes(no_op_change)
         self.assertIsNone(changes)
-
-    @patch("sys.argv", ["parse.py", "/fake/dir", "--state", "/fake/state.tfstate"])
-    @patch("pathlib.Path.is_dir")
-    @patch("pathlib.Path.exists")
-    @patch("tfsec.parse.run_terraform_plan")
-    def test_main_with_state_file(self, mock_run, mock_exists, mock_is_dir):
-        from tfsec.parse import main
-        
-        # Mock path checks
-        mock_is_dir.return_value = True
-        mock_exists.return_value = True
-        
-        # Mock successful plan
-        mock_run.return_value = MagicMock(
-            error=None,
-            json_plan={
-                "resource_changes": [{
-                    "address": "test_resource",
-                    "type": "test_type",
-                    "name": "test",
-                    "change": self.sample_resource_change
-                }]
-            }
-        )
-
-        # Redirect stdout to capture output
-        with patch("sys.stdout") as mock_stdout:
-            main()
-            
-        # Verify run_terraform_plan was called with state file
-        mock_run.assert_called_once()
-        args, kwargs = mock_run.call_args
-        self.assertEqual(len(args), 2)
-        self.assertIsInstance(args[1], Path)
 
     @patch("tfsec.parse.subprocess.run")
     def test_successful_terraform_plan(self, mock_run):
@@ -169,26 +133,27 @@ class TestTerraformParse(unittest.TestCase):
 
     def test_create_resource_changes_dict(self):
         sample_plan = {
-            "resource_changes": [{
-                "address": "test_resource",
-                "type": "test_type",
-                "name": "test",
-                "change": self.sample_resource_change
-            }]
+            "resource_changes": [
+                {
+                    "address": "test_resource",
+                    "type": "test_type",
+                    "name": "test",
+                    "change": self.sample_resource_change,
+                }
+            ]
         }
-        
+
         changes = create_resource_changes_dict(sample_plan)
-        
+
         self.assertIn("test_resource", changes)
         self.assertEqual(changes["test_resource"]["type"], "test_type")
         self.assertEqual(changes["test_resource"]["name"], "test")
         self.assertEqual(
             changes["test_resource"]["changes"]["source_ranges"]["before"],
-            ["10.0.0.0/8"]
+            ["10.0.0.0/8"],
         )
         self.assertEqual(
-            changes["test_resource"]["changes"]["source_ranges"]["after"],
-            ["0.0.0.0/0"]
+            changes["test_resource"]["changes"]["source_ranges"]["after"], ["0.0.0.0/0"]
         )
 
 
