@@ -37,7 +37,11 @@ poetry install
 
 ## Usage
 
-Basic usage:
+You can use this tool in two ways:
+
+### 1. Direct Analysis with Terraform
+
+Basic usage with direct Terraform execution:
 ```bash
 # Using Poetry
 poetry run python -m tfsec.analyze <terraform_directory> --state <state_file>
@@ -46,10 +50,27 @@ poetry run python -m tfsec.analyze <terraform_directory> --state <state_file>
 PYTHONPATH=src python -m tfsec.analyze <terraform_directory> --state <state_file>
 ```
 
+### 2. Analysis from Saved Plan File
+
+To avoid re-running Terraform commands repeatedly, you can save the plan to a file first:
+```bash
+# Save the plan to a JSON file
+python src/tfsec/parse.py --state examples/terraform.tfstate examples/insecure-firewall/ --output examples/tf-insecure-diff.json
+
+# Analyze the saved plan file
+PYTHONPATH=src python -m tfsec.analyze --plan-file examples/tf-insecure-diff.json
+```
+
+This approach is useful for:
+- CI/CD pipelines where you want to separate plan generation from analysis
+- Sharing plans with team members for review
+- Analyzing the same plan multiple times with different settings
+
 Options:
 * `--provider`: LLM provider to use (ollama, openai, anthropic) [default: ollama]
 * `--model`: Model name to use [default: phi4:latest]
-* `--state`: Path to Terraform state file
+* `--state`: Path to Terraform state file (when running with Terraform)
+* `--plan-file`: Path to saved plan file (when analyzing without Terraform)
 * `terraform_directory`: Directory containing Terraform configuration
 
 Example:
