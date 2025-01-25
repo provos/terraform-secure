@@ -13,7 +13,7 @@ from pydantic import BaseModel, Field
 
 from tfsec.llm_interface import LLMInterface
 from tfsec.llm_config import llm_from_config
-from tfsec.parse import run_terraform_plan, create_resource_changes_dict
+from tfsec.parse import run_terraform_plan, create_resource_changes_dict, load_plan_result
 
 
 class SecurityIssue(BaseModel):
@@ -112,13 +112,17 @@ def analyze_changes(llm: LLMInterface, changes: Dict) -> Optional[SecurityAnalys
 
 def main():
     parser = argparse.ArgumentParser(description='Analyze Terraform changes for security implications')
-    parser.add_argument('directory', type=Path, help='Directory containing Terraform configuration')
+    parser.add_argument('--directory', type=Path, help='Directory containing Terraform configuration')
     parser.add_argument('--state', type=Path, help='Path to Terraform state file')
+    parser.add_argument('--plan-file', type=Path, help='Read analysis from saved plan file instead of running terraform')
     parser.add_argument('--provider', default='ollama', choices=['ollama', 'openai', 'anthropic'],
                        help='LLM provider to use')
     parser.add_argument('--model', default='phi4:latest', help='Model name to use')
     
     args = parser.parse_args()
+
+    if not args.directory and not args.plan_file:
+        parser.error("Either --directory or --plan-file must be specified")
 
     # Create LLM interface
     llm = llm_from_config(
@@ -128,7 +132,11 @@ def main():
     )
     
     # Get Terraform changes
-    result = run_terraform_plan(args.directory, args.state)
+    if args.plan_file:
+        result = load_plan_result(args.plan_file)
+    else:
+        result = run_terraform_plan(args.directory, args.state)
+
     if result.error:
         print(f"Error: {result.error}")
         return 1

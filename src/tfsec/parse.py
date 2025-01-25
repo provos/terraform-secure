@@ -80,18 +80,46 @@ class TerraformPlanResult:
     return_code: int
     error: Optional[str] = None
 
+    def to_dict(self) -> Dict[str, Any]:
+        """Convert the result to a dictionary for serialization."""
+        return {
+            "stdout": self.stdout,
+            "stderr": self.stderr,
+            "json_plan": self.json_plan,
+            "return_code": self.return_code,
+            "error": self.error
+        }
 
-def run_terraform_plan(directory: Path, state_file: Optional[Path] = None) -> TerraformPlanResult:
-    """
-    Run terraform plan in the specified directory and capture the output in JSON format.
-    
-    Args:
-        directory: Path to the directory containing terraform configuration
-        state_file: Optional path to a terraform state file to use
-        
-    Returns:
-        TerraformPlanResult containing stdout, stderr, and parsed JSON plan
-    """
+    @classmethod
+    def from_dict(cls, data: Dict[str, Any]) -> 'TerraformPlanResult':
+        """Create a TerraformPlanResult from a dictionary."""
+        return cls(
+            stdout=data["stdout"],
+            stderr=data["stderr"],
+            json_plan=data["json_plan"],
+            return_code=data["return_code"],
+            error=data.get("error")
+        )
+
+def save_plan_result(result: TerraformPlanResult, output_file: Path) -> None:
+    """Save TerraformPlanResult to a JSON file."""
+    with open(output_file, 'w') as f:
+        json.dump(result.to_dict(), f, indent=2)
+
+def load_plan_result(input_file: Path) -> TerraformPlanResult:
+    """Load TerraformPlanResult from a JSON file."""
+    with open(input_file) as f:
+        data = json.load(f)
+    return TerraformPlanResult.from_dict(data)
+
+def run_terraform_plan(directory: Path, state_file: Optional[Path] = None, output_file: Optional[Path] = None) -> TerraformPlanResult:
+    """Run terraform plan in the specified directory and capture the output in JSON format."""
+    result = _run_terraform_plan(directory, state_file)
+    if output_file and result:
+        save_plan_result(result, output_file)
+    return result
+
+def _run_terraform_plan(directory: Path, state_file: Optional[Path] = None) -> TerraformPlanResult:
     copied_state = None
     try:
         # Copy state file if provided
@@ -216,6 +244,7 @@ def main():
     parser = argparse.ArgumentParser(description='Parse Terraform plan output')
     parser.add_argument('directory', type=Path, help='Directory containing Terraform configuration')
     parser.add_argument('--state', type=Path, help='Path to Terraform state file to use')
+    parser.add_argument('--output', type=Path, help='Save plan result to JSON file')
     
     args = parser.parse_args()
 
@@ -227,7 +256,7 @@ def main():
         print(f"Error: State file {args.state} does not exist")
         sys.exit(1)
 
-    result = run_terraform_plan(args.directory, args.state)
+    result = run_terraform_plan(args.directory, args.state, args.output)
     
     if result.error:
         print(f"Error: {result.error}", file=sys.stderr)
