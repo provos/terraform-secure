@@ -103,30 +103,3 @@ The tool provides:
 *   **Reduce Manual Review Effort:** Automate a significant portion of the security review process, freeing up security teams to focus on more complex issues.
 *   **Shift-Left Security:** Integrate security checks early in the development lifecycle, making it easier and cheaper to fix issues.
 *   **Improve Auditability:** Maintain a record of all security-related changes detected and addressed during the Terraform deployment process.
-
-## How to Use
-
-1.  **Generate Terraform Plan:**
-    ```bash
-    terraform plan -out=tfplan
-    terraform show -json tfplan > tfplan.json
-    ```
-
-2.  **Run the Analyzer:**
-    ```bash
-    # Example using a Python script (analyzer.py - to be developed):
-    python analyzer.py --plan tfplan.json --rules rules.yaml
-    ```
-    Or potentially:
-    ```bash
-    # Example using a shell script:
-    ./analyze_plan.sh tfplan.json
-    ```
-
-3.  **Review the Report:**
-    The analyzer will generate a report (e.g., `security_report.txt` or `security_report.json`) detailing any potential security issues.
-
-4.  **Integrate with CI/CD:**
-    Add a step to your CI/CD pipeline to execute the analyzer after the `terraform plan` step.  Configure the pipeline to fail if the analyzer detects any critical issues. (See "CI/CD Integration" section below for more details)
-
-## Example Report (Conceptual)
