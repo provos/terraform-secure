@@ -11,8 +11,7 @@ from pathlib import Path
 from typing import Dict, List, Optional
 from pydantic import BaseModel, Field
 
-from tfsec.llm_interface import LLMInterface
-from tfsec.llm_config import llm_from_config
+from llm_interface import LLMInterface, llm_from_config
 from tfsec.parse import run_terraform_plan, create_resource_changes_dict, load_plan_result
 
 

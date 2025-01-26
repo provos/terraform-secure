@@ -9,10 +9,9 @@ packages = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.12"
-pydantic = "^2.10.6"
-openai = "^1.60.1"
-anthropic = "^0.45.0"
+python = "^3.10"
+pydantic = ">=2.0.0"
+llm-interface = "^0.1.0"
 
 
 [tool.poetry.group.dev.dependencies]

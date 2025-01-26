@@ -1,0 +1,1489 @@
+{
+  "format_version": "1.2",
+  "terraform_version": "1.10.5",
+  "planned_values": {
+    "outputs": {
+      "instance_external_ip": {
+        "sensitive": false,
+        "type": "string",
+        "value": "34.75.99.229"
+      }
+    },
+    "root_module": {
+      "resources": [
+        {
+          "address": "google_compute_address.external_ip",
+          "mode": "managed",
+          "type": "google_compute_address",
+          "name": "external_ip",
+          "provider_name": "registry.terraform.io/hashicorp/google",
+          "schema_version": 0,
+          "values": {
+            "address": "34.23.39.98",
+            "address_type": "EXTERNAL",
+            "creation_timestamp": "2025-01-25T13:58:48.458-08:00",
+            "description": "",
+            "effective_labels": {
+              "goog-terraform-provisioned": "true"
+            },
+            "id": "projects/fit-accumulator-440500-e5/regions/us-east1/addresses/vm-external-ip",
+            "ip_version": "",
+            "ipv6_endpoint_type": "",
+            "label_fingerprint": "vezUS-42LLM=",
+            "labels": {},
+            "name": "vm-external-ip",
+            "network": "",
+            "network_tier": "PREMIUM",
+            "prefix_length": 0,
+            "project": "fit-accumulator-440500-e5",
+            "purpose": "",
+            "region": "us-east1",
+            "self_link": "https://www.googleapis.com/compute/v1/projects/fit-accumulator-440500-e5/regions/us-east1/addresses/vm-external-ip",
+            "subnetwork": "",
+            "terraform_labels": {
+              "goog-terraform-provisioned": "true"
+            },
+            "timeouts": null,
+            "users": []
+          },
+          "sensitive_values": {
+            "effective_labels": {},
+            "labels": {},
+            "terraform_labels": {},
+            "users": []
+          }
+        },
+        {
+          "address": "google_compute_firewall.allow-http-https",
+          "mode": "managed",
+          "type": "google_compute_firewall",
+          "name": "allow-http-https",
+          "provider_name": "registry.terraform.io/hashicorp/google",
+          "schema_version": 1,
+          "values": {
+            "allow": [
+              {
+                "ports": [
+                  "80",
+                  "443"
+                ],
+                "protocol": "tcp"
+              }
+            ],
+            "creation_timestamp": "2025-01-25T13:59:42.038-08:00",
+            "deny": [],
+            "description": "",
+            "destination_ranges": [],
+            "direction": "INGRESS",
+            "disabled": false,
+            "enable_logging": null,
+            "id": "projects/fit-accumulator-440500-e5/global/firewalls/allow-http-https",
+            "log_config": [],
+            "name": "allow-http-https",
+            "network": "https://www.googleapis.com/compute/v1/projects/fit-accumulator-440500-e5/global/networks/default-network",
+            "priority": 1000,
+            "project": "fit-accumulator-440500-e5",
+            "self_link": "https://www.googleapis.com/compute/v1/projects/fit-accumulator-440500-e5/global/firewalls/allow-http-https",
+            "source_ranges": [
+              "0.0.0.0/8"
+            ],
+            "source_service_accounts": [],
+            "source_tags": [],
+            "target_service_accounts": [],
+            "target_tags": [
+              "http-server"
+            ],
+            "timeouts": null
+          },
+          "sensitive_values": {
+            "allow": [
+              {
+                "ports": [
+                  false,
+                  false
+                ]
+              }
+            ],
+            "deny": [],
+            "destination_ranges": [],
+            "log_config": [],
+            "source_ranges": [
+              false
+            ],
+            "source_service_accounts": [],
+            "source_tags": [],
+            "target_service_accounts": [],
+            "target_tags": [
+              false
+            ]
+          }
+        },
+        {
+          "address": "google_compute_instance.vm_instance",
+          "mode": "managed",
+          "type": "google_compute_instance",
+          "name": "vm_instance",
+          "provider_name": "registry.terraform.io/hashicorp/google",
+          "schema_version": 6,
+          "values": {
+            "advanced_machine_features": [],
+            "allow_stopping_for_update": null,
+            "attached_disk": [],
+            "boot_disk": [
+              {
+                "auto_delete": true,
+                "device_name": "persistent-disk-0",
+                "disk_encryption_key_raw": "",
+                "disk_encryption_key_sha256": "",
+                "initialize_params": [
+                  {
+                    "enable_confidential_compute": false,
+                    "image": "https://www.googleapis.com/compute/v1/projects/debian-cloud/global/images/debian-11-bullseye-v20250123",
+                    "labels": {},
+                    "provisioned_iops": 0,
+                    "provisioned_throughput": 0,
+                    "resource_manager_tags": {},
+                    "resource_policies": [],
+                    "size": 10,
+                    "storage_pool": "",
+                    "type": "pd-standard"
+                  }
+                ],
+                "interface": "",
+                "kms_key_self_link": "",
+                "mode": "READ_WRITE",
+                "source": "https://www.googleapis.com/compute/v1/projects/fit-accumulator-440500-e5/zones/us-east1-b/disks/example-vm"
+              }
+            ],
+            "can_ip_forward": false,
+            "confidential_instance_config": [],
+            "cpu_platform": "Intel Broadwell",
+            "creation_timestamp": "2025-01-25T13:59:43.215-08:00",
+            "current_status": "RUNNING",
+            "deletion_protection": false,
+            "description": "",
+            "desired_status": null,
+            "effective_labels": {
+              "goog-terraform-provisioned": "true"
+            },
+            "enable_display": false,
+            "guest_accelerator": [],
+            "hostname": "",
+            "id": "projects/fit-accumulator-440500-e5/zones/us-east1-b/instances/example-vm",
+            "instance_id": "3798524879905021984",
+            "key_revocation_action_type": "",
+            "label_fingerprint": "vezUS-42LLM=",
+            "labels": {},
+            "machine_type": "e2-micro",
+            "metadata": {
+              "enable-oslogin": "FALSE"
+            },
+            "metadata_fingerprint": "D4pQ2g-2oeo=",
+            "metadata_startup_script": null,
+            "min_cpu_platform": "",
+            "name": "example-vm",
+            "network_interface": [
+              {
+                "access_config": [
+                  {
+                    "nat_ip": "34.75.99.229",
+                    "network_tier": "PREMIUM",
+                    "public_ptr_domain_name": ""
+                  }
+                ],
+                "alias_ip_range": [],
+                "internal_ipv6_prefix_length": 0,
+                "ipv6_access_config": [],
+                "ipv6_access_type": "",
+                "ipv6_address": "",
+                "name": "nic0",
+                "network": "https://www.googleapis.com/compute/v1/projects/fit-accumulator-440500-e5/global/networks/default-network",
+                "network_ip": "10.142.0.2",
+                "nic_type": "",
+                "queue_count": 0,
+                "stack_type": "IPV4_ONLY",
+                "subnetwork": "https://www.googleapis.com/compute/v1/projects/fit-accumulator-440500-e5/regions/us-east1/subnetworks/default-network",
+                "subnetwork_project": "fit-accumulator-440500-e5"
+              }
+            ],
+            "network_performance_config": [],
+            "params": [],
+            "project": "fit-accumulator-440500-e5",
+            "reservation_affinity": [],
+            "resource_policies": [],
+            "scheduling": [
+              {
+                "automatic_restart": true,
+                "availability_domain": 0,
+                "instance_termination_action": "",
+                "local_ssd_recovery_timeout": [],
+                "max_run_duration": [],
+                "min_node_cpus": 0,
+                "node_affinities": [],
+                "on_host_maintenance": "MIGRATE",
+                "on_instance_stop_action": [],
+                "preemptible": false,
+                "provisioning_model": "STANDARD"
+              }
+            ],
+            "scratch_disk": [],
+            "self_link": "https://www.googleapis.com/compute/v1/projects/fit-accumulator-440500-e5/zones/us-east1-b/instances/example-vm",
+            "service_account": [],
+            "shielded_instance_config": [
+              {
+                "enable_integrity_monitoring": true,
+                "enable_secure_boot": false,
+                "enable_vtpm": true
+              }
+            ],
+            "tags": [
+              "http-server"
+            ],
+            "tags_fingerprint": "FYLDgkTKlA4=",
+            "terraform_labels": {
+              "goog-terraform-provisioned": "true"
+            },
+            "timeouts": null,
+            "zone": "us-east1-b"
+          },
+          "sensitive_values": {
+            "advanced_machine_features": [],
+            "attached_disk": [],
+            "boot_disk": [
+              {
+                "disk_encryption_key_raw": true,
+                "initialize_params": [
+                  {
+                    "labels": {},
+                    "resource_manager_tags": {},
+                    "resource_policies": []
+                  }
+                ]
+              }
+            ],
+            "confidential_instance_config": [],
+            "effective_labels": {},
+            "guest_accelerator": [],
+            "labels": {},
+            "metadata": {},
+            "network_interface": [
+              {
+                "access_config": [
+                  {}
+                ],
+                "alias_ip_range": [],
+                "ipv6_access_config": []
+              }
+            ],
+            "network_performance_config": [],
+            "params": [],
+            "reservation_affinity": [],
+            "resource_policies": [],
+            "scheduling": [
+              {
+                "local_ssd_recovery_timeout": [],
+                "max_run_duration": [],
+                "node_affinities": [],
+                "on_instance_stop_action": []
+              }
+            ],
+            "scratch_disk": [],
+            "service_account": [],
+            "shielded_instance_config": [
+              {}
+            ],
+            "tags": [
+              false
+            ],
+            "terraform_labels": {}
+          }
+        },
+        {
+          "address": "google_compute_network.default",
+          "mode": "managed",
+          "type": "google_compute_network",
+          "name": "default",
+          "provider_name": "registry.terraform.io/hashicorp/google",
+          "schema_version": 0,
+          "values": {
+            "auto_create_subnetworks": true,
+            "bgp_always_compare_med": false,
+            "bgp_best_path_selection_mode": "LEGACY",
+            "bgp_inter_region_cost": "",
+            "delete_default_routes_on_create": false,
+            "description": "",
+            "enable_ula_internal_ipv6": false,
+            "gateway_ipv4": "",
+            "id": "projects/fit-accumulator-440500-e5/global/networks/default-network",
+            "internal_ipv6_range": "",
+            "mtu": 0,
+            "name": "default-network",
+            "network_firewall_policy_enforcement_order": "AFTER_CLASSIC_FIREWALL",
+            "network_id": "2246595755244052598",
+            "numeric_id": "2246595755244052598",
+            "project": "fit-accumulator-440500-e5",
+            "routing_mode": "REGIONAL",
+            "self_link": "https://www.googleapis.com/compute/v1/projects/fit-accumulator-440500-e5/global/networks/default-network",
+            "timeouts": null
+          },
+          "sensitive_values": {}
+        }
+      ]
+    }
+  },
+  "resource_changes": [
+    {
+      "address": "google_compute_address.external_ip",
+      "mode": "managed",
+      "type": "google_compute_address",
+      "name": "external_ip",
+      "provider_name": "registry.terraform.io/hashicorp/google",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "address": "34.23.39.98",
+          "address_type": "EXTERNAL",
+          "creation_timestamp": "2025-01-25T13:58:48.458-08:00",
+          "description": "",
+          "effective_labels": {
+            "goog-terraform-provisioned": "true"
+          },
+          "id": "projects/fit-accumulator-440500-e5/regions/us-east1/addresses/vm-external-ip",
+          "ip_version": "",
+          "ipv6_endpoint_type": "",
+          "label_fingerprint": "vezUS-42LLM=",
+          "labels": {},
+          "name": "vm-external-ip",
+          "network": "",
+          "network_tier": "PREMIUM",
+          "prefix_length": 0,
+          "project": "fit-accumulator-440500-e5",
+          "purpose": "",
+          "region": "us-east1",
+          "self_link": "https://www.googleapis.com/compute/v1/projects/fit-accumulator-440500-e5/regions/us-east1/addresses/vm-external-ip",
+          "subnetwork": "",
+          "terraform_labels": {
+            "goog-terraform-provisioned": "true"
+          },
+          "timeouts": null,
+          "users": []
+        },
+        "after": {
+          "address": "34.23.39.98",
+          "address_type": "EXTERNAL",
+          "creation_timestamp": "2025-01-25T13:58:48.458-08:00",
+          "description": "",
+          "effective_labels": {
+            "goog-terraform-provisioned": "true"
+          },
+          "id": "projects/fit-accumulator-440500-e5/regions/us-east1/addresses/vm-external-ip",
+          "ip_version": "",
+          "ipv6_endpoint_type": "",
+          "label_fingerprint": "vezUS-42LLM=",
+          "labels": {},
+          "name": "vm-external-ip",
+          "network": "",
+          "network_tier": "PREMIUM",
+          "prefix_length": 0,
+          "project": "fit-accumulator-440500-e5",
+          "purpose": "",
+          "region": "us-east1",
+          "self_link": "https://www.googleapis.com/compute/v1/projects/fit-accumulator-440500-e5/regions/us-east1/addresses/vm-external-ip",
+          "subnetwork": "",
+          "terraform_labels": {
+            "goog-terraform-provisioned": "true"
+          },
+          "timeouts": null,
+          "users": []
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "effective_labels": {},
+          "labels": {},
+          "terraform_labels": {},
+          "users": []
+        },
+        "after_sensitive": {
+          "effective_labels": {},
+          "labels": {},
+          "terraform_labels": {},
+          "users": []
+        }
+      }
+    },
+    {
+      "address": "google_compute_firewall.allow-http-https",
+      "mode": "managed",
+      "type": "google_compute_firewall",
+      "name": "allow-http-https",
+      "provider_name": "registry.terraform.io/hashicorp/google",
+      "change": {
+        "actions": [
+          "update"
+        ],
+        "before": {
+          "allow": [
+            {
+              "ports": [
+                "80",
+                "443"
+              ],
+              "protocol": "tcp"
+            }
+          ],
+          "creation_timestamp": "2025-01-25T13:59:42.038-08:00",
+          "deny": [],
+          "description": "",
+          "destination_ranges": [],
+          "direction": "INGRESS",
+          "disabled": false,
+          "enable_logging": null,
+          "id": "projects/fit-accumulator-440500-e5/global/firewalls/allow-http-https",
+          "log_config": [],
+          "name": "allow-http-https",
+          "network": "https://www.googleapis.com/compute/v1/projects/fit-accumulator-440500-e5/global/networks/default-network",
+          "priority": 1000,
+          "project": "fit-accumulator-440500-e5",
+          "self_link": "https://www.googleapis.com/compute/v1/projects/fit-accumulator-440500-e5/global/firewalls/allow-http-https",
+          "source_ranges": [
+            "10.0.0.0/8"
+          ],
+          "source_service_accounts": [],
+          "source_tags": [],
+          "target_service_accounts": [],
+          "target_tags": [
+            "http-server"
+          ],
+          "timeouts": null
+        },
+        "after": {
+          "allow": [
+            {
+              "ports": [
+                "80",
+                "443"
+              ],
+              "protocol": "tcp"
+            }
+          ],
+          "creation_timestamp": "2025-01-25T13:59:42.038-08:00",
+          "deny": [],
+          "description": "",
+          "destination_ranges": [],
+          "direction": "INGRESS",
+          "disabled": false,
+          "enable_logging": null,
+          "id": "projects/fit-accumulator-440500-e5/global/firewalls/allow-http-https",
+          "log_config": [],
+          "name": "allow-http-https",
+          "network": "https://www.googleapis.com/compute/v1/projects/fit-accumulator-440500-e5/global/networks/default-network",
+          "priority": 1000,
+          "project": "fit-accumulator-440500-e5",
+          "self_link": "https://www.googleapis.com/compute/v1/projects/fit-accumulator-440500-e5/global/firewalls/allow-http-https",
+          "source_ranges": [
+            "0.0.0.0/8"
+          ],
+          "source_service_accounts": [],
+          "source_tags": [],
+          "target_service_accounts": [],
+          "target_tags": [
+            "http-server"
+          ],
+          "timeouts": null
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "allow": [
+            {
+              "ports": [
+                false,
+                false
+              ]
+            }
+          ],
+          "deny": [],
+          "destination_ranges": [],
+          "log_config": [],
+          "source_ranges": [
+            false
+          ],
+          "source_service_accounts": [],
+          "source_tags": [],
+          "target_service_accounts": [],
+          "target_tags": [
+            false
+          ]
+        },
+        "after_sensitive": {
+          "allow": [
+            {
+              "ports": [
+                false,
+                false
+              ]
+            }
+          ],
+          "deny": [],
+          "destination_ranges": [],
+          "log_config": [],
+          "source_ranges": [
+            false
+          ],
+          "source_service_accounts": [],
+          "source_tags": [],
+          "target_service_accounts": [],
+          "target_tags": [
+            false
+          ]
+        }
+      }
+    },
+    {
+      "address": "google_compute_instance.vm_instance",
+      "mode": "managed",
+      "type": "google_compute_instance",
+      "name": "vm_instance",
+      "provider_name": "registry.terraform.io/hashicorp/google",
+      "change": {
+        "actions": [
+          "update"
+        ],
+        "before": {
+          "advanced_machine_features": [],
+          "allow_stopping_for_update": null,
+          "attached_disk": [],
+          "boot_disk": [
+            {
+              "auto_delete": true,
+              "device_name": "persistent-disk-0",
+              "disk_encryption_key_raw": "",
+              "disk_encryption_key_sha256": "",
+              "initialize_params": [
+                {
+                  "enable_confidential_compute": false,
+                  "image": "https://www.googleapis.com/compute/v1/projects/debian-cloud/global/images/debian-11-bullseye-v20250123",
+                  "labels": {},
+                  "provisioned_iops": 0,
+                  "provisioned_throughput": 0,
+                  "resource_manager_tags": {},
+                  "resource_policies": [],
+                  "size": 10,
+                  "storage_pool": "",
+                  "type": "pd-standard"
+                }
+              ],
+              "interface": "",
+              "kms_key_self_link": "",
+              "mode": "READ_WRITE",
+              "source": "https://www.googleapis.com/compute/v1/projects/fit-accumulator-440500-e5/zones/us-east1-b/disks/example-vm"
+            }
+          ],
+          "can_ip_forward": false,
+          "confidential_instance_config": [],
+          "cpu_platform": "Intel Broadwell",
+          "creation_timestamp": "2025-01-25T13:59:43.215-08:00",
+          "current_status": "RUNNING",
+          "deletion_protection": false,
+          "description": "",
+          "desired_status": null,
+          "effective_labels": {
+            "goog-terraform-provisioned": "true"
+          },
+          "enable_display": false,
+          "guest_accelerator": [],
+          "hostname": "",
+          "id": "projects/fit-accumulator-440500-e5/zones/us-east1-b/instances/example-vm",
+          "instance_id": "3798524879905021984",
+          "key_revocation_action_type": "",
+          "label_fingerprint": "vezUS-42LLM=",
+          "labels": {},
+          "machine_type": "e2-micro",
+          "metadata": {
+            "enable-oslogin": "TRUE"
+          },
+          "metadata_fingerprint": "D4pQ2g-2oeo=",
+          "metadata_startup_script": null,
+          "min_cpu_platform": "",
+          "name": "example-vm",
+          "network_interface": [
+            {
+              "access_config": [
+                {
+                  "nat_ip": "34.75.99.229",
+                  "network_tier": "PREMIUM",
+                  "public_ptr_domain_name": ""
+                }
+              ],
+              "alias_ip_range": [],
+              "internal_ipv6_prefix_length": 0,
+              "ipv6_access_config": [],
+              "ipv6_access_type": "",
+              "ipv6_address": "",
+              "name": "nic0",
+              "network": "https://www.googleapis.com/compute/v1/projects/fit-accumulator-440500-e5/global/networks/default-network",
+              "network_ip": "10.142.0.2",
+              "nic_type": "",
+              "queue_count": 0,
+              "stack_type": "IPV4_ONLY",
+              "subnetwork": "https://www.googleapis.com/compute/v1/projects/fit-accumulator-440500-e5/regions/us-east1/subnetworks/default-network",
+              "subnetwork_project": "fit-accumulator-440500-e5"
+            }
+          ],
+          "network_performance_config": [],
+          "params": [],
+          "project": "fit-accumulator-440500-e5",
+          "reservation_affinity": [],
+          "resource_policies": [],
+          "scheduling": [
+            {
+              "automatic_restart": true,
+              "availability_domain": 0,
+              "instance_termination_action": "",
+              "local_ssd_recovery_timeout": [],
+              "max_run_duration": [],
+              "min_node_cpus": 0,
+              "node_affinities": [],
+              "on_host_maintenance": "MIGRATE",
+              "on_instance_stop_action": [],
+              "preemptible": false,
+              "provisioning_model": "STANDARD"
+            }
+          ],
+          "scratch_disk": [],
+          "self_link": "https://www.googleapis.com/compute/v1/projects/fit-accumulator-440500-e5/zones/us-east1-b/instances/example-vm",
+          "service_account": [],
+          "shielded_instance_config": [
+            {
+              "enable_integrity_monitoring": true,
+              "enable_secure_boot": false,
+              "enable_vtpm": true
+            }
+          ],
+          "tags": [
+            "http-server"
+          ],
+          "tags_fingerprint": "FYLDgkTKlA4=",
+          "terraform_labels": {
+            "goog-terraform-provisioned": "true"
+          },
+          "timeouts": null,
+          "zone": "us-east1-b"
+        },
+        "after": {
+          "advanced_machine_features": [],
+          "allow_stopping_for_update": null,
+          "attached_disk": [],
+          "boot_disk": [
+            {
+              "auto_delete": true,
+              "device_name": "persistent-disk-0",
+              "disk_encryption_key_raw": "",
+              "disk_encryption_key_sha256": "",
+              "initialize_params": [
+                {
+                  "enable_confidential_compute": false,
+                  "image": "https://www.googleapis.com/compute/v1/projects/debian-cloud/global/images/debian-11-bullseye-v20250123",
+                  "labels": {},
+                  "provisioned_iops": 0,
+                  "provisioned_throughput": 0,
+                  "resource_manager_tags": {},
+                  "resource_policies": [],
+                  "size": 10,
+                  "storage_pool": "",
+                  "type": "pd-standard"
+                }
+              ],
+              "interface": "",
+              "kms_key_self_link": "",
+              "mode": "READ_WRITE",
+              "source": "https://www.googleapis.com/compute/v1/projects/fit-accumulator-440500-e5/zones/us-east1-b/disks/example-vm"
+            }
+          ],
+          "can_ip_forward": false,
+          "confidential_instance_config": [],
+          "cpu_platform": "Intel Broadwell",
+          "creation_timestamp": "2025-01-25T13:59:43.215-08:00",
+          "current_status": "RUNNING",
+          "deletion_protection": false,
+          "description": "",
+          "desired_status": null,
+          "effective_labels": {
+            "goog-terraform-provisioned": "true"
+          },
+          "enable_display": false,
+          "guest_accelerator": [],
+          "hostname": "",
+          "id": "projects/fit-accumulator-440500-e5/zones/us-east1-b/instances/example-vm",
+          "instance_id": "3798524879905021984",
+          "key_revocation_action_type": "",
+          "label_fingerprint": "vezUS-42LLM=",
+          "labels": {},
+          "machine_type": "e2-micro",
+          "metadata": {
+            "enable-oslogin": "FALSE"
+          },
+          "metadata_fingerprint": "D4pQ2g-2oeo=",
+          "metadata_startup_script": null,
+          "min_cpu_platform": "",
+          "name": "example-vm",
+          "network_interface": [
+            {
+              "access_config": [
+                {
+                  "nat_ip": "34.75.99.229",
+                  "network_tier": "PREMIUM",
+                  "public_ptr_domain_name": ""
+                }
+              ],
+              "alias_ip_range": [],
+              "internal_ipv6_prefix_length": 0,
+              "ipv6_access_config": [],
+              "ipv6_access_type": "",
+              "ipv6_address": "",
+              "name": "nic0",
+              "network": "https://www.googleapis.com/compute/v1/projects/fit-accumulator-440500-e5/global/networks/default-network",
+              "network_ip": "10.142.0.2",
+              "nic_type": "",
+              "queue_count": 0,
+              "stack_type": "IPV4_ONLY",
+              "subnetwork": "https://www.googleapis.com/compute/v1/projects/fit-accumulator-440500-e5/regions/us-east1/subnetworks/default-network",
+              "subnetwork_project": "fit-accumulator-440500-e5"
+            }
+          ],
+          "network_performance_config": [],
+          "params": [],
+          "project": "fit-accumulator-440500-e5",
+          "reservation_affinity": [],
+          "resource_policies": [],
+          "scheduling": [
+            {
+              "automatic_restart": true,
+              "availability_domain": 0,
+              "instance_termination_action": "",
+              "local_ssd_recovery_timeout": [],
+              "max_run_duration": [],
+              "min_node_cpus": 0,
+              "node_affinities": [],
+              "on_host_maintenance": "MIGRATE",
+              "on_instance_stop_action": [],
+              "preemptible": false,
+              "provisioning_model": "STANDARD"
+            }
+          ],
+          "scratch_disk": [],
+          "self_link": "https://www.googleapis.com/compute/v1/projects/fit-accumulator-440500-e5/zones/us-east1-b/instances/example-vm",
+          "service_account": [],
+          "shielded_instance_config": [
+            {
+              "enable_integrity_monitoring": true,
+              "enable_secure_boot": false,
+              "enable_vtpm": true
+            }
+          ],
+          "tags": [
+            "http-server"
+          ],
+          "tags_fingerprint": "FYLDgkTKlA4=",
+          "terraform_labels": {
+            "goog-terraform-provisioned": "true"
+          },
+          "timeouts": null,
+          "zone": "us-east1-b"
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "advanced_machine_features": [],
+          "attached_disk": [],
+          "boot_disk": [
+            {
+              "disk_encryption_key_raw": true,
+              "initialize_params": [
+                {
+                  "labels": {},
+                  "resource_manager_tags": {},
+                  "resource_policies": []
+                }
+              ]
+            }
+          ],
+          "confidential_instance_config": [],
+          "effective_labels": {},
+          "guest_accelerator": [],
+          "labels": {},
+          "metadata": {},
+          "network_interface": [
+            {
+              "access_config": [
+                {}
+              ],
+              "alias_ip_range": [],
+              "ipv6_access_config": []
+            }
+          ],
+          "network_performance_config": [],
+          "params": [],
+          "reservation_affinity": [],
+          "resource_policies": [],
+          "scheduling": [
+            {
+              "local_ssd_recovery_timeout": [],
+              "max_run_duration": [],
+              "node_affinities": [],
+              "on_instance_stop_action": []
+            }
+          ],
+          "scratch_disk": [],
+          "service_account": [],
+          "shielded_instance_config": [
+            {}
+          ],
+          "tags": [
+            false
+          ],
+          "terraform_labels": {}
+        },
+        "after_sensitive": {
+          "advanced_machine_features": [],
+          "attached_disk": [],
+          "boot_disk": [
+            {
+              "disk_encryption_key_raw": true,
+              "initialize_params": [
+                {
+                  "labels": {},
+                  "resource_manager_tags": {},
+                  "resource_policies": []
+                }
+              ]
+            }
+          ],
+          "confidential_instance_config": [],
+          "effective_labels": {},
+          "guest_accelerator": [],
+          "labels": {},
+          "metadata": {},
+          "network_interface": [
+            {
+              "access_config": [
+                {}
+              ],
+              "alias_ip_range": [],
+              "ipv6_access_config": []
+            }
+          ],
+          "network_performance_config": [],
+          "params": [],
+          "reservation_affinity": [],
+          "resource_policies": [],
+          "scheduling": [
+            {
+              "local_ssd_recovery_timeout": [],
+              "max_run_duration": [],
+              "node_affinities": [],
+              "on_instance_stop_action": []
+            }
+          ],
+          "scratch_disk": [],
+          "service_account": [],
+          "shielded_instance_config": [
+            {}
+          ],
+          "tags": [
+            false
+          ],
+          "terraform_labels": {}
+        }
+      }
+    },
+    {
+      "address": "google_compute_network.default",
+      "mode": "managed",
+      "type": "google_compute_network",
+      "name": "default",
+      "provider_name": "registry.terraform.io/hashicorp/google",
+      "change": {
+        "actions": [
+          "no-op"
+        ],
+        "before": {
+          "auto_create_subnetworks": true,
+          "bgp_always_compare_med": false,
+          "bgp_best_path_selection_mode": "LEGACY",
+          "bgp_inter_region_cost": "",
+          "delete_default_routes_on_create": false,
+          "description": "",
+          "enable_ula_internal_ipv6": false,
+          "gateway_ipv4": "",
+          "id": "projects/fit-accumulator-440500-e5/global/networks/default-network",
+          "internal_ipv6_range": "",
+          "mtu": 0,
+          "name": "default-network",
+          "network_firewall_policy_enforcement_order": "AFTER_CLASSIC_FIREWALL",
+          "network_id": "2246595755244052598",
+          "numeric_id": "2246595755244052598",
+          "project": "fit-accumulator-440500-e5",
+          "routing_mode": "REGIONAL",
+          "self_link": "https://www.googleapis.com/compute/v1/projects/fit-accumulator-440500-e5/global/networks/default-network",
+          "timeouts": null
+        },
+        "after": {
+          "auto_create_subnetworks": true,
+          "bgp_always_compare_med": false,
+          "bgp_best_path_selection_mode": "LEGACY",
+          "bgp_inter_region_cost": "",
+          "delete_default_routes_on_create": false,
+          "description": "",
+          "enable_ula_internal_ipv6": false,
+          "gateway_ipv4": "",
+          "id": "projects/fit-accumulator-440500-e5/global/networks/default-network",
+          "internal_ipv6_range": "",
+          "mtu": 0,
+          "name": "default-network",
+          "network_firewall_policy_enforcement_order": "AFTER_CLASSIC_FIREWALL",
+          "network_id": "2246595755244052598",
+          "numeric_id": "2246595755244052598",
+          "project": "fit-accumulator-440500-e5",
+          "routing_mode": "REGIONAL",
+          "self_link": "https://www.googleapis.com/compute/v1/projects/fit-accumulator-440500-e5/global/networks/default-network",
+          "timeouts": null
+        },
+        "after_unknown": {},
+        "before_sensitive": {},
+        "after_sensitive": {}
+      }
+    }
+  ],
+  "output_changes": {
+    "instance_external_ip": {
+      "actions": [
+        "no-op"
+      ],
+      "before": "34.75.99.229",
+      "after": "34.75.99.229",
+      "after_unknown": false,
+      "before_sensitive": false,
+      "after_sensitive": false
+    }
+  },
+  "prior_state": {
+    "format_version": "1.0",
+    "terraform_version": "1.10.5",
+    "values": {
+      "outputs": {
+        "instance_external_ip": {
+          "sensitive": false,
+          "value": "34.75.99.229",
+          "type": "string"
+        }
+      },
+      "root_module": {
+        "resources": [
+          {
+            "address": "google_compute_address.external_ip",
+            "mode": "managed",
+            "type": "google_compute_address",
+            "name": "external_ip",
+            "provider_name": "registry.terraform.io/hashicorp/google",
+            "schema_version": 0,
+            "values": {
+              "address": "34.23.39.98",
+              "address_type": "EXTERNAL",
+              "creation_timestamp": "2025-01-25T13:58:48.458-08:00",
+              "description": "",
+              "effective_labels": {
+                "goog-terraform-provisioned": "true"
+              },
+              "id": "projects/fit-accumulator-440500-e5/regions/us-east1/addresses/vm-external-ip",
+              "ip_version": "",
+              "ipv6_endpoint_type": "",
+              "label_fingerprint": "vezUS-42LLM=",
+              "labels": {},
+              "name": "vm-external-ip",
+              "network": "",
+              "network_tier": "PREMIUM",
+              "prefix_length": 0,
+              "project": "fit-accumulator-440500-e5",
+              "purpose": "",
+              "region": "us-east1",
+              "self_link": "https://www.googleapis.com/compute/v1/projects/fit-accumulator-440500-e5/regions/us-east1/addresses/vm-external-ip",
+              "subnetwork": "",
+              "terraform_labels": {
+                "goog-terraform-provisioned": "true"
+              },
+              "timeouts": null,
+              "users": []
+            },
+            "sensitive_values": {
+              "effective_labels": {},
+              "labels": {},
+              "terraform_labels": {},
+              "users": []
+            }
+          },
+          {
+            "address": "google_compute_firewall.allow-http-https",
+            "mode": "managed",
+            "type": "google_compute_firewall",
+            "name": "allow-http-https",
+            "provider_name": "registry.terraform.io/hashicorp/google",
+            "schema_version": 1,
+            "values": {
+              "allow": [
+                {
+                  "ports": [
+                    "80",
+                    "443"
+                  ],
+                  "protocol": "tcp"
+                }
+              ],
+              "creation_timestamp": "2025-01-25T13:59:42.038-08:00",
+              "deny": [],
+              "description": "",
+              "destination_ranges": [],
+              "direction": "INGRESS",
+              "disabled": false,
+              "enable_logging": null,
+              "id": "projects/fit-accumulator-440500-e5/global/firewalls/allow-http-https",
+              "log_config": [],
+              "name": "allow-http-https",
+              "network": "https://www.googleapis.com/compute/v1/projects/fit-accumulator-440500-e5/global/networks/default-network",
+              "priority": 1000,
+              "project": "fit-accumulator-440500-e5",
+              "self_link": "https://www.googleapis.com/compute/v1/projects/fit-accumulator-440500-e5/global/firewalls/allow-http-https",
+              "source_ranges": [
+                "10.0.0.0/8"
+              ],
+              "source_service_accounts": [],
+              "source_tags": [],
+              "target_service_accounts": [],
+              "target_tags": [
+                "http-server"
+              ],
+              "timeouts": null
+            },
+            "sensitive_values": {
+              "allow": [
+                {
+                  "ports": [
+                    false,
+                    false
+                  ]
+                }
+              ],
+              "deny": [],
+              "destination_ranges": [],
+              "log_config": [],
+              "source_ranges": [
+                false
+              ],
+              "source_service_accounts": [],
+              "source_tags": [],
+              "target_service_accounts": [],
+              "target_tags": [
+                false
+              ]
+            },
+            "depends_on": [
+              "google_compute_network.default"
+            ]
+          },
+          {
+            "address": "google_compute_instance.vm_instance",
+            "mode": "managed",
+            "type": "google_compute_instance",
+            "name": "vm_instance",
+            "provider_name": "registry.terraform.io/hashicorp/google",
+            "schema_version": 6,
+            "values": {
+              "advanced_machine_features": [],
+              "allow_stopping_for_update": null,
+              "attached_disk": [],
+              "boot_disk": [
+                {
+                  "auto_delete": true,
+                  "device_name": "persistent-disk-0",
+                  "disk_encryption_key_raw": "",
+                  "disk_encryption_key_sha256": "",
+                  "initialize_params": [
+                    {
+                      "enable_confidential_compute": false,
+                      "image": "https://www.googleapis.com/compute/v1/projects/debian-cloud/global/images/debian-11-bullseye-v20250123",
+                      "labels": {},
+                      "provisioned_iops": 0,
+                      "provisioned_throughput": 0,
+                      "resource_manager_tags": {},
+                      "resource_policies": [],
+                      "size": 10,
+                      "storage_pool": "",
+                      "type": "pd-standard"
+                    }
+                  ],
+                  "interface": "",
+                  "kms_key_self_link": "",
+                  "mode": "READ_WRITE",
+                  "source": "https://www.googleapis.com/compute/v1/projects/fit-accumulator-440500-e5/zones/us-east1-b/disks/example-vm"
+                }
+              ],
+              "can_ip_forward": false,
+              "confidential_instance_config": [],
+              "cpu_platform": "Intel Broadwell",
+              "creation_timestamp": "2025-01-25T13:59:43.215-08:00",
+              "current_status": "RUNNING",
+              "deletion_protection": false,
+              "description": "",
+              "desired_status": null,
+              "effective_labels": {
+                "goog-terraform-provisioned": "true"
+              },
+              "enable_display": false,
+              "guest_accelerator": [],
+              "hostname": "",
+              "id": "projects/fit-accumulator-440500-e5/zones/us-east1-b/instances/example-vm",
+              "instance_id": "3798524879905021984",
+              "key_revocation_action_type": "",
+              "label_fingerprint": "vezUS-42LLM=",
+              "labels": {},
+              "machine_type": "e2-micro",
+              "metadata": {
+                "enable-oslogin": "TRUE"
+              },
+              "metadata_fingerprint": "D4pQ2g-2oeo=",
+              "metadata_startup_script": null,
+              "min_cpu_platform": "",
+              "name": "example-vm",
+              "network_interface": [
+                {
+                  "access_config": [
+                    {
+                      "nat_ip": "34.75.99.229",
+                      "network_tier": "PREMIUM",
+                      "public_ptr_domain_name": ""
+                    }
+                  ],
+                  "alias_ip_range": [],
+                  "internal_ipv6_prefix_length": 0,
+                  "ipv6_access_config": [],
+                  "ipv6_access_type": "",
+                  "ipv6_address": "",
+                  "name": "nic0",
+                  "network": "https://www.googleapis.com/compute/v1/projects/fit-accumulator-440500-e5/global/networks/default-network",
+                  "network_ip": "10.142.0.2",
+                  "nic_type": "",
+                  "queue_count": 0,
+                  "stack_type": "IPV4_ONLY",
+                  "subnetwork": "https://www.googleapis.com/compute/v1/projects/fit-accumulator-440500-e5/regions/us-east1/subnetworks/default-network",
+                  "subnetwork_project": "fit-accumulator-440500-e5"
+                }
+              ],
+              "network_performance_config": [],
+              "params": [],
+              "project": "fit-accumulator-440500-e5",
+              "reservation_affinity": [],
+              "resource_policies": [],
+              "scheduling": [
+                {
+                  "automatic_restart": true,
+                  "availability_domain": 0,
+                  "instance_termination_action": "",
+                  "local_ssd_recovery_timeout": [],
+                  "max_run_duration": [],
+                  "min_node_cpus": 0,
+                  "node_affinities": [],
+                  "on_host_maintenance": "MIGRATE",
+                  "on_instance_stop_action": [],
+                  "preemptible": false,
+                  "provisioning_model": "STANDARD"
+                }
+              ],
+              "scratch_disk": [],
+              "self_link": "https://www.googleapis.com/compute/v1/projects/fit-accumulator-440500-e5/zones/us-east1-b/instances/example-vm",
+              "service_account": [],
+              "shielded_instance_config": [
+                {
+                  "enable_integrity_monitoring": true,
+                  "enable_secure_boot": false,
+                  "enable_vtpm": true
+                }
+              ],
+              "tags": [
+                "http-server"
+              ],
+              "tags_fingerprint": "FYLDgkTKlA4=",
+              "terraform_labels": {
+                "goog-terraform-provisioned": "true"
+              },
+              "timeouts": null,
+              "zone": "us-east1-b"
+            },
+            "sensitive_values": {
+              "advanced_machine_features": [],
+              "attached_disk": [],
+              "boot_disk": [
+                {
+                  "disk_encryption_key_raw": true,
+                  "initialize_params": [
+                    {
+                      "labels": {},
+                      "resource_manager_tags": {},
+                      "resource_policies": []
+                    }
+                  ]
+                }
+              ],
+              "confidential_instance_config": [],
+              "effective_labels": {},
+              "guest_accelerator": [],
+              "labels": {},
+              "metadata": {},
+              "network_interface": [
+                {
+                  "access_config": [
+                    {}
+                  ],
+                  "alias_ip_range": [],
+                  "ipv6_access_config": []
+                }
+              ],
+              "network_performance_config": [],
+              "params": [],
+              "reservation_affinity": [],
+              "resource_policies": [],
+              "scheduling": [
+                {
+                  "local_ssd_recovery_timeout": [],
+                  "max_run_duration": [],
+                  "node_affinities": [],
+                  "on_instance_stop_action": []
+                }
+              ],
+              "scratch_disk": [],
+              "service_account": [],
+              "shielded_instance_config": [
+                {}
+              ],
+              "tags": [
+                false
+              ],
+              "terraform_labels": {}
+            },
+            "depends_on": [
+              "google_compute_network.default"
+            ]
+          },
+          {
+            "address": "google_compute_network.default",
+            "mode": "managed",
+            "type": "google_compute_network",
+            "name": "default",
+            "provider_name": "registry.terraform.io/hashicorp/google",
+            "schema_version": 0,
+            "values": {
+              "auto_create_subnetworks": true,
+              "bgp_always_compare_med": false,
+              "bgp_best_path_selection_mode": "LEGACY",
+              "bgp_inter_region_cost": "",
+              "delete_default_routes_on_create": false,
+              "description": "",
+              "enable_ula_internal_ipv6": false,
+              "gateway_ipv4": "",
+              "id": "projects/fit-accumulator-440500-e5/global/networks/default-network",
+              "internal_ipv6_range": "",
+              "mtu": 0,
+              "name": "default-network",
+              "network_firewall_policy_enforcement_order": "AFTER_CLASSIC_FIREWALL",
+              "network_id": "2246595755244052598",
+              "numeric_id": "2246595755244052598",
+              "project": "fit-accumulator-440500-e5",
+              "routing_mode": "REGIONAL",
+              "self_link": "https://www.googleapis.com/compute/v1/projects/fit-accumulator-440500-e5/global/networks/default-network",
+              "timeouts": null
+            },
+            "sensitive_values": {}
+          }
+        ]
+      }
+    }
+  },
+  "configuration": {
+    "provider_config": {
+      "google": {
+        "name": "google",
+        "full_name": "registry.terraform.io/hashicorp/google",
+        "expressions": {
+          "project": {
+            "constant_value": "fit-accumulator-440500-e5"
+          },
+          "region": {
+            "constant_value": "us-east1`"
+          }
+        }
+      }
+    },
+    "root_module": {
+      "outputs": {
+        "instance_external_ip": {
+          "expression": {
+            "references": [
+              "google_compute_instance.vm_instance.network_interface[0].access_config[0].nat_ip",
+              "google_compute_instance.vm_instance.network_interface[0].access_config[0]",
+              "google_compute_instance.vm_instance.network_interface[0].access_config",
+              "google_compute_instance.vm_instance.network_interface[0]",
+              "google_compute_instance.vm_instance.network_interface",
+              "google_compute_instance.vm_instance"
+            ]
+          }
+        }
+      },
+      "resources": [
+        {
+          "address": "google_compute_address.external_ip",
+          "mode": "managed",
+          "type": "google_compute_address",
+          "name": "external_ip",
+          "provider_config_key": "google",
+          "expressions": {
+            "name": {
+              "constant_value": "vm-external-ip"
+            },
+            "region": {
+              "constant_value": "us-east1"
+            }
+          },
+          "schema_version": 0
+        },
+        {
+          "address": "google_compute_firewall.allow-http-https",
+          "mode": "managed",
+          "type": "google_compute_firewall",
+          "name": "allow-http-https",
+          "provider_config_key": "google",
+          "expressions": {
+            "allow": [
+              {
+                "ports": {
+                  "constant_value": [
+                    "80",
+                    "443"
+                  ]
+                },
+                "protocol": {
+                  "constant_value": "tcp"
+                }
+              }
+            ],
+            "name": {
+              "constant_value": "allow-http-https"
+            },
+            "network": {
+              "references": [
+                "google_compute_network.default.self_link",
+                "google_compute_network.default"
+              ]
+            },
+            "source_ranges": {
+              "constant_value": [
+                "0.0.0.0/8"
+              ]
+            },
+            "target_tags": {
+              "constant_value": [
+                "http-server"
+              ]
+            }
+          },
+          "schema_version": 1
+        },
+        {
+          "address": "google_compute_instance.vm_instance",
+          "mode": "managed",
+          "type": "google_compute_instance",
+          "name": "vm_instance",
+          "provider_config_key": "google",
+          "expressions": {
+            "boot_disk": [
+              {
+                "initialize_params": [
+                  {
+                    "image": {
+                      "constant_value": "debian-cloud/debian-11"
+                    }
+                  }
+                ]
+              }
+            ],
+            "machine_type": {
+              "constant_value": "e2-micro"
+            },
+            "metadata": {
+              "constant_value": {
+                "enable-oslogin": "FALSE"
+              }
+            },
+            "name": {
+              "constant_value": "example-vm"
+            },
+            "network_interface": [
+              {
+                "access_config": [
+                  {}
+                ],
+                "network": {
+                  "references": [
+                    "google_compute_network.default.name",
+                    "google_compute_network.default"
+                  ]
+                }
+              }
+            ],
+            "tags": {
+              "constant_value": [
+                "http-server"
+              ]
+            },
+            "zone": {
+              "constant_value": "us-east1-b"
+            }
+          },
+          "schema_version": 6
+        },
+        {
+          "address": "google_compute_network.default",
+          "mode": "managed",
+          "type": "google_compute_network",
+          "name": "default",
+          "provider_config_key": "google",
+          "expressions": {
+            "auto_create_subnetworks": {
+              "constant_value": true
+            },
+            "name": {
+              "constant_value": "default-network"
+            }
+          },
+          "schema_version": 0
+        }
+      ]
+    }
+  },
+  "relevant_attributes": [
+    {
+      "resource": "google_compute_network.default",
+      "attribute": [
+        "self_link"
+      ]
+    },
+    {
+      "resource": "google_compute_network.default",
+      "attribute": [
+        "name"
+      ]
+    }
+  ],
+  "timestamp": "2025-01-25T23:17:26Z",
+  "applyable": true,
+  "complete": true,
+  "errored": false
+}
